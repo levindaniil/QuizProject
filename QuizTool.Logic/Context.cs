@@ -14,8 +14,8 @@ namespace QuizTool.Logic
 
         public Context() : base("QuizToolDB")
         {
-            Database.SetInitializer(
-              new DropCreateDatabaseIfModelChanges<Context>());
+            //Database.SetInitializer(
+            //  new DropCreateDatabaseIfModelChanges<Context>());
         }
     }
 

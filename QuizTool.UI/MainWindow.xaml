@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:QuizTool.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Loaded="Grid_Loaded">
+        <ListBox x:Name="listBoxQuestions" DisplayMemberPath="Text" HorizontalAlignment="Left" Height="336" Margin="10,45,0,0" VerticalAlignment="Top" Width="284"/>
+        <ListBox x:Name="listBoxAnswers" DisplayMemberPath="Text" HorizontalAlignment="Left" Height="338" Margin="420,45,0,0" VerticalAlignment="Top" Width="283"/>
+
     </Grid>
 </Window>
