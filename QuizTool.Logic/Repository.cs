@@ -35,7 +35,7 @@ namespace QuizTool.Logic
         {
             using (var context = new Context())
             {
-                _items = context.Answers.ToList();
+                _items = context.Answers.Include("Question").ToList();
             }
         }
     }

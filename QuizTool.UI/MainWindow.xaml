@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuizTool.UI"
+        xmlns:local="clr-namespace:QuizTool.UI" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        
+        
+        Icon="logo.png"
+        Title="  Question" Height="480" Width="800" Loaded="Window_Loaded">
     <Grid Loaded="Grid_Loaded">
-        <ListBox x:Name="listBoxQuestions" DisplayMemberPath="Text" HorizontalAlignment="Left" Height="336" Margin="10,45,0,0" VerticalAlignment="Top" Width="284"/>
-        <ListBox x:Name="listBoxAnswers" DisplayMemberPath="Text" HorizontalAlignment="Left" Height="338" Margin="420,45,0,0" VerticalAlignment="Top" Width="283"/>
-
+        <Frame x:Name="mainFrame" BorderThickness="0" NavigationUIVisibility="Hidden" Background="#FF003459"/>
     </Grid>
 </Window>
