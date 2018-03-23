@@ -53,7 +53,7 @@ namespace QuizTool.UI
                 newButton.Content = $"  {answers[i].Text}";
                 newButton.FontSize = 20;
                 newButton.HorizontalAlignment = HorizontalAlignment.Stretch;
-                newButton.HorizontalContentAlignment = HorizontalAlignment.Left;                
+                newButton.HorizontalContentAlignment = HorizontalAlignment.Center;
                 newButton.Margin = new Thickness(5);
                 newButton.ToolTip = "Click to answer";
                 newButton.Click += NewButton_Click;                
@@ -86,6 +86,7 @@ namespace QuizTool.UI
             TextBlock tbChoseAns = new TextBlock();
             tbChoseAns.FontSize = 20;
             tbChoseAns.Foreground = Brushes.White;
+            tbChoseAns.TextWrapping = TextWrapping.Wrap;
             tbChoseAns.Text = $"{chosenAnswer.Text}";
 
             StackPanel spChose = new StackPanel();
@@ -102,6 +103,7 @@ namespace QuizTool.UI
             TextBlock tbCorrAns = new TextBlock();
             tbCorrAns.FontSize = 20;
             tbCorrAns.Foreground = Brushes.White;
+            tbCorrAns.TextWrapping = TextWrapping.Wrap;
             tbCorrAns.Text = $"{correctAnswer.Text}";
 
             StackPanel spCorr = new StackPanel();
@@ -114,6 +116,7 @@ namespace QuizTool.UI
             TextBlock expl = new TextBlock();
             expl.FontSize = 20;
             expl.Foreground = Brushes.White;
+            expl.TextWrapping = TextWrapping.Wrap;
             expl.Text = $"Explanation: {question.Explanation}";
 
             sp.Children.Add(spChose);

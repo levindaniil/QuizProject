@@ -9,12 +9,16 @@
       Title="SingleAnswerPage" Loaded="Page_Loaded">
 
     <Grid>
-        <StackPanel Margin="0 0 0 50" Orientation="Vertical">
-            <TextBlock x:Name="textBoxQuestion" Foreground="White" FontSize="30"  TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550"/>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="0 0 0 50" Orientation="Vertical" Grid.ColumnSpan="1">
+            <TextBlock x:Name="textBoxQuestion" Foreground="White" FontSize="30"  TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="10"/>
             <Grid x:Name="gridAnswers" Margin="10" >
-                
             </Grid>
         </StackPanel>
-        <Button x:Name="buttonExit"  Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Content="Exit" FontSize="20" Width="100" Height="40" Click="buttonExit_Click" />
+        <Button x:Name="buttonExit"  Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Content="Exit" FontSize="20" Width="100" Height="40" Click="buttonExit_Click" Grid.ColumnSpan="2"/>
+        <Image Source="logo.png" VerticalAlignment="Top" HorizontalAlignment="Right" Width="230" Height="200" Margin="0,10,20,0" Grid.Column="1"/>
     </Grid>
 </Page>
