@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizTool.UI", "QuizTool.UI\QuizTool.UI.csproj", "{88E2532D-6439-4390-A788-CA797C9E835E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizTool.Logic", "QuizTool.Logic\QuizTool.Logic.csproj", "{A1FEF487-C670-440B-B3B1-D8B21E6A68F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{88E2532D-6439-4390-A788-CA797C9E835E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88E2532D-6439-4390-A788-CA797C9E835E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88E2532D-6439-4390-A788-CA797C9E835E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FEF487-C670-440B-B3B1-D8B21E6A68F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FEF487-C670-440B-B3B1-D8B21E6A68F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FEF487-C670-440B-B3B1-D8B21E6A68F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FEF487-C670-440B-B3B1-D8B21E6A68F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
