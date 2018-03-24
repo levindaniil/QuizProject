@@ -7,8 +7,8 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Background" Value="#818A8F"/>
-            
+            <Setter Property="Background" Value="#818A8F"/>            
+
         </Style>
     </Application.Resources>
 </Application>

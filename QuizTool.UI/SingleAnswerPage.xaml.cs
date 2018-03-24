@@ -53,7 +53,7 @@ namespace QuizTool.UI
                 newButton.Content = $"  {answers[i].Text}";
                 newButton.FontSize = 20;
                 newButton.HorizontalAlignment = HorizontalAlignment.Stretch;
-                newButton.HorizontalContentAlignment = HorizontalAlignment.Center;
+                newButton.HorizontalContentAlignment = HorizontalAlignment.Left;
                 newButton.Margin = new Thickness(5);
                 newButton.ToolTip = "Click to answer";
                 newButton.Click += NewButton_Click;                

@@ -10,8 +10,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="550"/>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="0 0 0 50" Orientation="Vertical" Grid.ColumnSpan="1">
             <TextBlock x:Name="textBoxQuestion" Foreground="White" FontSize="30"  TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="10"/>
