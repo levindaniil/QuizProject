@@ -68,6 +68,11 @@ namespace QuizTool.UI
         {
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+
+            // Try this to remove icon from your Taskbar
+            //*
+            //ShowInTaskbar = false;
+            //*
         }
     }
 }
