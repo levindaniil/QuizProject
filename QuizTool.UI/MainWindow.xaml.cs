@@ -33,9 +33,6 @@ namespace QuizTool.UI
         Repository<Question> QuestionRepo;
         Repository<Answer> AnswerRepo;
 
-        List<Question> Questions;
-        List<Answer> Answers;
-
         public MainWindow()
         {
             InitializeComponent();            
@@ -45,11 +42,9 @@ namespace QuizTool.UI
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            Questions = QuestionRepo.Data.ToList();
-            Answers = AnswerRepo.Data.ToList();
 
-            var currentQuestion = Questions.FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
-            var currentAnswers = Answers.FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
+            var currentQuestion = QuestionRepo.Data.ToList().FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
+            var currentAnswers = AnswerRepo.Data.ToList().FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
 
             int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
 

@@ -32,7 +32,7 @@ namespace QuizTool.Logic.Migrations
             //    {
             //        Text = "Are you an elephant?",
             //        Explanation = "I think you are not a elephant because you can jump",
-            //        Date = new DateTime(2018,3,22)
+            //        Date = DateTime.Now.Date
             //    }
             //};
 
@@ -44,43 +44,43 @@ namespace QuizTool.Logic.Migrations
             //{
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 1),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 13),
             //        Text = "I am a bird",
             //        IsCorrect = false
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 1),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 13),
             //        Text = "I am not a bird",
             //        IsCorrect = true
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 1),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 13),
             //        Text = "What is going on here?",
             //        IsCorrect = false
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 2),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 14),
             //        Text = "I am an elephant",
             //        IsCorrect = false
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 2),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 14),
             //        Text = "I am not an elephant",
             //        IsCorrect = true
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 2),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 14),
             //        Text = "I am a human being",
             //        IsCorrect = true
             //    },
             //    new Answer
             //    {
-            //        Question = context.Questions.FirstOrDefault(q => q.Id == 2),
+            //        Question = context.Questions.FirstOrDefault(q => q.Id == 14),
             //        Text = "I still dont know whats going on here",
             //        IsCorrect = false
             //    }
