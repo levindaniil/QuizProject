@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizTool.UI" 
         mc:Ignorable="d"
-        Topmost="False"
+        Topmost="True"
+        WindowStyle="ToolWindow"
+        
         
         Icon="logo.png"
         Title="  Question" Height="480" Width="800" Loaded="Window_Loaded">
     <Grid Loaded="Grid_Loaded">
-        <Frame x:Name="mainFrame" BorderThickness="0" NavigationUIVisibility="Hidden" Background="#FF003459"/>
+            <Frame x:Name="mainFrame" BorderThickness="0" NavigationUIVisibility="Hidden" Background="#FF003459"/>
     </Grid>
 </Window>
