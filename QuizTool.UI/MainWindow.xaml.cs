@@ -51,13 +51,11 @@ namespace QuizTool.UI
 
             int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
 
-            if (qtyAnswers == 1)
-                mainFrame.NavigationService.Navigate(new SingleAnswerPage(currentQuestion, currentAnswers));
-            else if (qtyAnswers == 0)
-                MessageBox.Show("Something went wrong");
-            else
+            if (qtyAnswers != 0)
                 mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
-
+            else 
+                MessageBox.Show("Something went wrong");
+           
             //listBoxAnswers.ItemsSource = Answers;
             //listBoxQuestions.ItemsSource = Questions;
         }
