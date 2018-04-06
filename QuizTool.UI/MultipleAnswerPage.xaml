@@ -18,7 +18,7 @@
             <Grid x:Name="gridAnswers" Margin="10" >
             </Grid>
         </StackPanel>
-        <Button x:Name="buttonSubmit"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Content="Submit" FontSize="20" Width="100" Height="40" Click="buttonSubmit_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonSubmit"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Content="Submit" FontSize="20" Width="100" Height="40" Click="SubmitButton_Click" Grid.ColumnSpan="2"/>
         <Image Source="logo.png" VerticalAlignment="Top" HorizontalAlignment="Right" Width="230" Height="200" Margin="0,10,20,0" Grid.Column="1"/>
         <Button x:Name="buttonExit"  Visibility="Hidden" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" Content="Submit" FontSize="20" Width="100" Height="40" Click="buttonExit_Click" Grid.ColumnSpan="2"/>
        

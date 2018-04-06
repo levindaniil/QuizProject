@@ -56,7 +56,7 @@ namespace QuizTool.UI
             else if (qtyAnswers == 0)
                 MessageBox.Show("Something went wrong");
             else
-                mainFrame.NavigationService.Navigate(new MultipleAnswerPage());
+                mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
 
             //listBoxAnswers.ItemsSource = Answers;
             //listBoxQuestions.ItemsSource = Questions;
@@ -78,6 +78,5 @@ namespace QuizTool.UI
             base.OnClosing(e);
             e.Cancel = true;
         }
-       
     }
 }
