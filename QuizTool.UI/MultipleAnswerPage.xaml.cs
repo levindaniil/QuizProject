@@ -144,8 +144,8 @@ namespace QuizTool.UI
 
                 if (chosenCB.Count() > 1)
                     throw new Exception("Something went wrong");
-                else                
-                    chosenAnswer = answers[int.Parse(chosenCB[0].Name.Substring(8))];
+                else
+                    chosenAnswer = answers.FirstOrDefault(a => a.Id == int.Parse(chosenCB[0].Name.Substring(8)));
                 
 
                 gridAnswers.Children.Clear();
