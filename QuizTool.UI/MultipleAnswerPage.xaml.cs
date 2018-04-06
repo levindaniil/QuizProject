@@ -57,6 +57,7 @@ namespace QuizTool.UI
                 CheckBox checkBox = new CheckBox();
 
                 Grid.SetRow(newCheckBox, i);
+                gridAnswers.Children.Add(newCheckBox);
                 checkBoxes.Add(newCheckBox);
             }
 
@@ -89,9 +90,10 @@ namespace QuizTool.UI
             foreach (var item in  chosenAnswers)
             {
                 item.Foreground = Brushes.Red;
-                item.Content += "  - Uncorrect";
+                item.Content += "  - Incorrect";
             }
 
+            buttonSubmit.Visibility = Visibility.Hidden;
 
         }
 
