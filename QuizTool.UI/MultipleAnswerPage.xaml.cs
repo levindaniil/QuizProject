@@ -93,6 +93,10 @@ namespace QuizTool.UI
                 item.Content += "  - Incorrect";
             }
 
+            foreach (var box in checkBoxes)
+            {
+                box.IsEnabled = false;
+            }
             buttonSubmit.Visibility = Visibility.Hidden;
 
         }
