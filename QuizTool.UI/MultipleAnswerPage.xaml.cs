@@ -50,11 +50,11 @@ namespace QuizTool.UI
                 newCheckBox.Name = $"CheckBox{answers[i].Id}";
                 newCheckBox.IsEnabled = true;
                 newCheckBox.Content = $"  {answers[i].Text}";
-                newCheckBox.FontSize = 20;
+                newCheckBox.FontSize = 30;                
                 newCheckBox.HorizontalContentAlignment = HorizontalAlignment.Left;
                 newCheckBox.HorizontalAlignment = HorizontalAlignment.Stretch;
                 newCheckBox.Margin = new Thickness(5);
-                CheckBox checkBox = new CheckBox();
+                //CheckBox checkBox = new CheckBox();
 
                 Grid.SetRow(newCheckBox, i);
                 gridAnswers.Children.Add(newCheckBox);
