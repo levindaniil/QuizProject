@@ -77,12 +77,18 @@ namespace QuizTool.UI
 
         private void NewCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
+            int i = 0;
+            foreach (var ch in checkBoxes)
+                if (ch.IsChecked == true) i++;
+            if (i == 0) buttonSubmit.IsEnabled = false;
+            else buttonSubmit.IsEnabled = true;
             if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
                 checkBoxes.ForEach(cb => cb.IsEnabled = true);
         }
 
         private void NewCheckBox_Checked(object sender, RoutedEventArgs e)
         {
+            buttonSubmit.IsEnabled = true;
             if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
                 checkBoxes.ForEach(cb => cb.IsEnabled = (bool)cb.IsChecked);
         }

@@ -46,13 +46,25 @@ namespace QuizTool.UI
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             
+           
+     
+           
+            //listBoxAnswers.ItemsSource = Answers;
+            //listBoxQuestions.ItemsSource = Questions;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+
             var currentQuestion = QuestionRepo.Data.ToList().FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
 
             //If statement for checking questions
             if (currentQuestion == null)
             {
 
-                var result = MessageBox.Show("Quesations are not found!"+"\n"+"Do you want to close application?", "Sorry, something went wrong.", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                var result = MessageBox.Show("Quesations are not found!" + "\n" + "Do you want to close application?", "Sorry, something went wrong.", MessageBoxButton.YesNo, MessageBoxImage.Error);
                 if (result == MessageBoxResult.Yes)
                 {
                     Application.Current.Shutdown();
@@ -65,19 +77,8 @@ namespace QuizTool.UI
 
             if (qtyAnswers != 0)
                 mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
-            else 
+            else
                 MessageBox.Show("Something went wrong");
-           
-     
-           
-            //listBoxAnswers.ItemsSource = Answers;
-            //listBoxQuestions.ItemsSource = Questions;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var hwnd = new WindowInteropHelper(this).Handle;
-            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
 
             // Try this to remove icon from your Taskbar
             //*
