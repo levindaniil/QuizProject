@@ -45,8 +45,20 @@ namespace QuizTool.UI
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             var currentQuestion = QuestionRepo.Data.ToList().FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
+
+            //If statement for checking questions
+            if (currentQuestion == null)
+            {
+
+                var result = MessageBox.Show("Quesations are not found!"+"\n"+"Do you want to close application?", "Sorry, something went wrong.", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+
             var currentAnswers = AnswerRepo.Data.ToList().FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
 
             int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
@@ -55,6 +67,8 @@ namespace QuizTool.UI
                 mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
             else 
                 MessageBox.Show("Something went wrong");
+           
+     
            
             //listBoxAnswers.ItemsSource = Answers;
             //listBoxQuestions.ItemsSource = Questions;
