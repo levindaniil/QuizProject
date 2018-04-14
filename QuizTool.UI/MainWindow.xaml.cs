@@ -63,27 +63,23 @@ namespace QuizTool.UI
             //If statement for checking questions
             if (currentQuestion == null)
             {
-
-                var result = MessageBox.Show("Quesations are not found!" + "\n" + "Do you want to close application?", "Sorry, something went wrong.", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                if (result == MessageBoxResult.Yes)
-                {
-                    Application.Current.Shutdown();
-                }
+                var result = MessageBox.Show("Questions are not found!" + "\n" + "The application will be closed", "Sorry, something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
             }
-
-            var currentAnswers = AnswerRepo.Data.ToList().FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
-
-            int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
-
-            if (qtyAnswers != 0)
-                mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
             else
-                MessageBox.Show("Something went wrong");
+            {
+                var currentAnswers = AnswerRepo.Data.ToList().FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
 
-            // Try this to remove icon from your Taskbar
-            //*
-            //ShowInTaskbar = false;
-            //*
+                int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
+
+                if (qtyAnswers != 0)
+                    mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
+                else
+                    MessageBox.Show("Something went wrong");
+            }
+            
+
+            
         }
 
         protected override void OnClosing(CancelEventArgs e)
