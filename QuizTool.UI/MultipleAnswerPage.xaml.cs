@@ -32,6 +32,7 @@ namespace QuizTool.UI
         Question question;
         List<Answer> answers;
         List<CheckBox> checkBoxes = new List<CheckBox>();
+        List<RadioButton> radioButtons = new List<RadioButton>();
         int answersCount;
 
         private void CreateGrid(List<Answer> answers)
@@ -43,36 +44,76 @@ namespace QuizTool.UI
                 gridAnswers.RowDefinitions.Add(newRow);
             }
 
-            for (int i = 0; i < answersCount; i++)
+            if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
             {
-                CheckBox newCheckBox = new CheckBox
+                for (int i = 0; i < answersCount; i++)
                 {
-                    Name = $"CheckBox{answers[i].Id}",
-                    IsEnabled = true                    
-                };
+                    RadioButton newRadioButton = new RadioButton
+                    {
+                        Name = $"RadioButton{answers[i].Id}"                        
+                    };
 
-                newCheckBox.Checked += NewCheckBox_Checked;
-                newCheckBox.Unchecked += NewCheckBox_Unchecked;
+                    newRadioButton.Checked += NewRadioButton_Checked;
 
-                var tb = new TextBlock
-                {
-                    Text = $"{answers[i].Text}",
-                    FontSize = 15,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Foreground = Brushes.White,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    TextWrapping = TextWrapping.Wrap
-                };
+                    var tb = new TextBlock
+                    {
+                        Text = $"{answers[i].Text}",
+                        FontSize = 15,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Foreground = Brushes.White,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        TextWrapping = TextWrapping.Wrap
+                    };
 
-                newCheckBox.HorizontalAlignment = HorizontalAlignment.Stretch;
-                newCheckBox.Margin = new Thickness(5);
-                newCheckBox.Content = tb;
+                    newRadioButton.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    newRadioButton.Margin = new Thickness(5);
+                    newRadioButton.Content = tb;
 
-                Grid.SetRow(newCheckBox, i);
-                gridAnswers.Children.Add(newCheckBox);
-                checkBoxes.Add(newCheckBox);
+                    Grid.SetRow(newRadioButton, i);
+                    gridAnswers.Children.Add(newRadioButton);
+                    radioButtons.Add(newRadioButton);
+                }
             }
 
+            else
+            {
+                for (int i = 0; i < answersCount; i++)
+                {
+                    CheckBox newCheckBox = new CheckBox
+                    {
+                        Name = $"CheckBox{answers[i].Id}",
+                        IsEnabled = true
+                    };
+
+                    newCheckBox.Checked += NewCheckBox_Checked;
+                    newCheckBox.Unchecked += NewCheckBox_Unchecked;
+
+                    var tb = new TextBlock
+                    {
+                        Text = $"{answers[i].Text}",
+                        FontSize = 15,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Foreground = Brushes.White,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        TextWrapping = TextWrapping.Wrap
+                    };
+
+                    newCheckBox.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    newCheckBox.Margin = new Thickness(5);
+                    newCheckBox.Content = tb;
+
+                    Grid.SetRow(newCheckBox, i);
+                    gridAnswers.Children.Add(newCheckBox);
+                    checkBoxes.Add(newCheckBox);
+                }
+            }
+            
+
+        }
+
+        private void NewRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            buttonSubmit.IsEnabled = true;
         }
 
         private void NewCheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -82,15 +123,15 @@ namespace QuizTool.UI
                 if (ch.IsChecked == true) i++;
             if (i == 0) buttonSubmit.IsEnabled = false;
             else buttonSubmit.IsEnabled = true;
-            if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
-                checkBoxes.ForEach(cb => cb.IsEnabled = true);
+            //if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
+            //    checkBoxes.ForEach(cb => cb.IsEnabled = true);
         }
 
         private void NewCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             buttonSubmit.IsEnabled = true;
-            if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
-                checkBoxes.ForEach(cb => cb.IsEnabled = (bool)cb.IsChecked);
+            //if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
+            //    checkBoxes.ForEach(cb => cb.IsEnabled = (bool)cb.IsChecked);
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -146,12 +187,12 @@ namespace QuizTool.UI
             {
                 var correctAnswer = answers.FirstOrDefault(a => a.IsCorrect == true);
                 Answer chosenAnswer;
-                var chosenCB = checkBoxes.FindAll(a => a.IsChecked == true);
+                var chosenCB = radioButtons.FindAll(a => a.IsChecked == true);
 
                 if (chosenCB.Count() > 1)
                     throw new Exception("Something went wrong");
                 else
-                    chosenAnswer = answers.FirstOrDefault(a => a.Id == int.Parse(chosenCB[0].Name.Substring(8)));
+                    chosenAnswer = answers.FirstOrDefault(a => a.Id == int.Parse(chosenCB[0].Name.Substring(11)));
                 
 
                 gridAnswers.Children.Clear();
