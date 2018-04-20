@@ -75,7 +75,10 @@ namespace QuizTool.UI
                 if (qtyAnswers != 0)
                     mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
                 else
-                    MessageBox.Show("Something went wrong");
+                {
+                    MessageBox.Show("Answers are not found!" + "\n" + "The application will be closed","Something went wrong");
+                    Application.Current.Shutdown();
+                }
             }
             
 
