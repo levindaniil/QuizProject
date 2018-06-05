@@ -12,7 +12,7 @@ namespace QuizTool.Logic
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
 
-        public Context() : base("QuizToolDB")
+        public Context() : base("QuizDB")
         {
             //Database.SetInitializer(
             //  new DropCreateDatabaseIfModelChanges<Context>());
