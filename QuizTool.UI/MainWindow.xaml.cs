@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Migrations.Infrastructure;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuizTool.Logic;
+using QuizTool.Logic.Migrations;
 
 namespace QuizTool.UI
 {
@@ -38,16 +41,14 @@ namespace QuizTool.UI
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
             QuestionRepo = new QuestionRepository();
             AnswerRepo = new AnswerRepository();
         }
 
+
         private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-           
-     
+        {        
            
             //listBoxAnswers.ItemsSource = Answers;
             //listBoxQuestions.ItemsSource = Questions;
@@ -55,6 +56,7 @@ namespace QuizTool.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
 
