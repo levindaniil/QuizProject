@@ -36,8 +36,13 @@ namespace QuizTool.Logic.RESTClient
                 var result = await client.PostAsync("/api/report/putreport", httpContent);
                 resultContent = await result.Content.ReadAsStringAsync();
             }
-            var item = JsonConvert.DeserializeObject<IncomingQuestionReport>(resultContent);
-            return CreateQuestion(item);
+            try
+            {
+                var item = JsonConvert.DeserializeObject<IncomingQuestionReport>(resultContent);
+                return CreateQuestion(item);
+            }
+            catch { }
+            return null;
         }
 
         public async Task<State> SubmitReport(Question item)

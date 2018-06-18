@@ -14,19 +14,19 @@ namespace Trial
         static void Main(string[] args)
         {
             Client client = new Client();
-            
-            //var task = client.GetReport(DateTime.Now.Date);
-            //task.Wait();
-            //var question = task.Result;
 
-            var questionRepo = RepositoryFactory.Default.GetRepository<Question>();
-            var question = questionRepo.Data.FirstOrDefault(q => q.Date == DateTime.Now.Date);
-
-            var task = client.SubmitReport(question);
+            var task = client.GetReport(DateTime.Now.Date);
             task.Wait();
-            var reportId = task.Result;
+            var question = task.Result;
 
-            Console.WriteLine(reportId.ToString());
+            //var questionRepo = RepositoryFactory.Default.GetRepository<Question>();
+            //var question = questionRepo.Data.FirstOrDefault(q => q.Date == DateTime.Now.Date);
+
+            //var task = client.SubmitReport(question);
+            //task.Wait();
+            //var reportId = task.Result;
+
+            Console.WriteLine(question);
             Console.ReadLine();
         }
     }
