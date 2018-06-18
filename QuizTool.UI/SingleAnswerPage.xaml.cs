@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuizTool.Logic;
+using QuizTool.Logic.Model;
 
 namespace QuizTool.UI
 {
@@ -124,7 +125,7 @@ namespace QuizTool.UI
                 expl.FontSize = 20;
                 expl.Foreground = Brushes.White;
                 expl.TextWrapping = TextWrapping.Wrap;
-                expl.Text = $"Explanation: {question.Explanation}";
+                expl.Text = $"Explanation: {question.Description}";
 
                 sp.Children.Add(spChose);
                 sp.Children.Add(spCorr);

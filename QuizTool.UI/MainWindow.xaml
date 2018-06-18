@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizTool.UI" 
         mc:Ignorable="d"
-        Topmost="True"
+        Topmost="False"
         WindowStyle="None"
-        WindowState="Maximized"
+        WindowState="Normal"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         

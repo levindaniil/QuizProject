@@ -11,6 +11,21 @@
     <AssemblyName>QuizTool.Logic</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,6 +51,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -47,39 +65,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answer.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="Migrations\201803231301259_Initial.cs" />
-    <Compile Include="Migrations\201803231301259_Initial.Designer.cs">
-      <DependentUpon>201803231301259_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231345273_AnswersChanged.cs" />
-    <Compile Include="Migrations\201803231345273_AnswersChanged.Designer.cs">
-      <DependentUpon>201803231345273_AnswersChanged.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231357401_Virtual.cs" />
-    <Compile Include="Migrations\201803231357401_Virtual.Designer.cs">
-      <DependentUpon>201803231357401_Virtual.cs</DependentUpon>
+    <Compile Include="DTO\IncomingAnswer.cs" />
+    <Compile Include="DTO\IncomingQuestion.cs" />
+    <Compile Include="DTO\IncomingQuestionReport.cs" />
+    <Compile Include="DTO\QuestionReportRequest.cs" />
+    <Compile Include="DTO\SubmitReportRequest.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="Migrations\201806181233238_Initial.cs" />
+    <Compile Include="Migrations\201806181233238_Initial.Designer.cs">
+      <DependentUpon>201806181233238_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Answer.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Question.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Model\Question.cs" />
+    <Compile Include="Repository\QuestionRepository.cs" />
+    <Compile Include="Model\State.cs" />
+    <Compile Include="Repository\RepositoryFactory.cs" />
+    <Compile Include="RESTClient\Client.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803231301259_Initial.resx">
-      <DependentUpon>201803231301259_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231345273_AnswersChanged.resx">
-      <DependentUpon>201803231345273_AnswersChanged.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231357401_Virtual.resx">
-      <DependentUpon>201803231357401_Virtual.cs</DependentUpon>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806181233238_Initial.resx">
+      <DependentUpon>201806181233238_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

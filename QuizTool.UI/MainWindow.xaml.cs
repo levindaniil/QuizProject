@@ -21,6 +21,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QuizTool.Logic;
 using QuizTool.Logic.Migrations;
+using QuizTool.Logic.Model;
+using QuizTool.Logic.Repository;
 
 namespace QuizTool.UI
 {
@@ -36,14 +38,12 @@ namespace QuizTool.UI
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        Repository<Question> QuestionRepo;
-        Repository<Answer> AnswerRepo;
+        QuestionRepository QuestionRepo;
 
         public MainWindow()
         {
             InitializeComponent();
-            QuestionRepo = new QuestionRepository();
-            AnswerRepo = new AnswerRepository();
+            QuestionRepo = new QuestionRepository();            
         }
 
 
@@ -67,10 +67,11 @@ namespace QuizTool.UI
             {
                 var result = MessageBox.Show("Questions are not found!" + "\n" + "The application will be closed", "Sorry, something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown();
+                
             }
             else
             {
-                var currentAnswers = AnswerRepo.Data.ToList().FindAll(a => a.Question.Id == currentQuestion.Id).ToList();
+                var currentAnswers = QuestionRepo.Data.FirstOrDefault(q => q.Date == DateTime.Now.Date).Answers.ToList();
 
                 int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
 
@@ -78,13 +79,13 @@ namespace QuizTool.UI
                     mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
                 else
                 {
-                    MessageBox.Show("Answers are not found!" + "\n" + "The application will be closed","Something went wrong");
+                    MessageBox.Show("Answers are not found!" + "\n" + "The application will be closed", "Something went wrong");
                     Application.Current.Shutdown();
                 }
             }
-            
 
-            
+
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

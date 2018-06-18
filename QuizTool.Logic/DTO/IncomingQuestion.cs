@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizTool.Logic
+namespace QuizTool.Logic.DTO
 {
-    public class Question
+    class IncomingQuestion
     {
-        public int Id { get; set; }
         public string Text { get; set; }
         public DateTime Date { get; set; }
-        public string Explanation { get; set; }        
+        public string Explanation { get; set; }
     }
 }

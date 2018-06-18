@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuizTool.Logic
+namespace QuizTool.Logic.Model
 {
     public class Answer
     {
         public int Id { get; set; }
-        public virtual Question Question { get; set; }
+        public int ExternalId { get; set; }
         public string Text { get; set; }
         public bool IsCorrect { get; set; }
     }

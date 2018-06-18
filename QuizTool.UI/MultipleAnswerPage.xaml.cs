@@ -1,4 +1,6 @@
 ﻿using QuizTool.Logic;
+using QuizTool.Logic.Model;
+using QuizTool.Logic.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace QuizTool.UI
     /// </summary>
     public partial class MultipleAnswerPage : Page
     {
+        QuestionRepository questionRepo = RepositoryFactory.Default.GetRepository<Question>(); 
+
         public MultipleAnswerPage(Question _question, List<Answer> _answers)
         {
             InitializeComponent();
@@ -41,7 +45,7 @@ namespace QuizTool.UI
         {
             if (correctAnswersCount == 0)
             {
-                MessageBox.Show("Right answers are not found!" + "\n" + "The application will be closed", "Something went wrong");
+                MessageBox.Show("Right answers are not found!" + "\n" + "The application will be closed", "Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
                 Application.Current.Shutdown();
             }
             else
@@ -132,26 +136,27 @@ namespace QuizTool.UI
                 if (ch.IsChecked == true) i++;
             if (i == 0) buttonSubmit.IsEnabled = false;
             else buttonSubmit.IsEnabled = true;
-            //if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
-            //    checkBoxes.ForEach(cb => cb.IsEnabled = true);
+            if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
+                checkBoxes.ForEach(cb => cb.IsEnabled = true);
         }
 
         private void NewCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             buttonSubmit.IsEnabled = true;
-            //if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
-            //    checkBoxes.ForEach(cb => cb.IsEnabled = (bool)cb.IsChecked);
+            if (answers.FindAll(a => a.IsCorrect == true).Count() == 1)
+                checkBoxes.ForEach(cb => cb.IsEnabled = (bool)cb.IsChecked);
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             buttonSubmit.Visibility = Visibility.Hidden;
             buttonExit.Visibility = Visibility.Visible;
-            var correctAnswers = answers.FindAll(a => a.IsCorrect == true);
-            var chosenAnswers = checkBoxes.FindAll(a => a.IsChecked == true);
+                       
             
             if (correctAnswersCount != 1)
             {
+                var correctAnswers = answers.FindAll(a => a.IsCorrect == true);
+                var chosenAnswers = checkBoxes.FindAll(a => a.IsChecked == true);
                 foreach (var item in checkBoxes)
                 {
                     foreach (var ans in correctAnswers)
@@ -189,7 +194,14 @@ namespace QuizTool.UI
                 {
                     box.IsEnabled = false;
                 }
-                
+
+                List<int> userAnswersNums = chosenAnswers.Select(c => int.Parse(c.Name.Substring(11))).ToList();
+                List<Answer> userAnswers = new List<Answer>();
+                foreach (var id in userAnswersNums)
+                {
+                    userAnswers.Add(answers.FirstOrDefault(a => a.Id == id));
+                }
+                questionRepo.EditItem(question, userAnswers);
 
             }
             else
@@ -197,16 +209,15 @@ namespace QuizTool.UI
                 var correctAnswer = answers.FirstOrDefault(a => a.IsCorrect == true);
                 Answer chosenAnswer;
                 var chosenCB = radioButtons.FindAll(a => a.IsChecked == true);
-                //мы до этого определяем вид элементов grid, поэтому эта проверка не нужна
-
-                //if (chosenCB.Count() > 1)
-                //{
-                //    throw new Exception("Something went wrong");
-
-                //}
-                //else
-                    chosenAnswer = answers.FirstOrDefault(a => a.Id == int.Parse(chosenCB[0].Name.Substring(11)));
                 
+                chosenAnswer = answers.FirstOrDefault(a => a.Id == int.Parse(chosenCB[0].Name.Substring(11)));
+
+                List<Answer> userAnswer = new List<Answer>()
+                {
+                    chosenAnswer
+                };
+                questionRepo.EditItem(question, userAnswer);
+
 
                 gridAnswers.Children.Clear();
                 gridAnswers.RowDefinitions.Clear();
@@ -268,7 +279,7 @@ namespace QuizTool.UI
                     FontSize = 27,
                     Foreground = Brushes.White,
                     TextWrapping = TextWrapping.Wrap,
-                    Text = $"Explanation: {question.Explanation}"
+                    Text = $"Explanation: {question.Description}"
                 };
 
                 sp.Children.Add(spChose);
