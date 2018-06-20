@@ -20,7 +20,7 @@ namespace QuizTool.UI
     /// Логика взаимодействия для App.xaml
     /// </summary>
     public partial class App : Application
-    {    
+    {
         //public void CallManagerFinish()
         //{
         //    var thread = new Thread(new ThreadStart()) { IsBackground = true };
@@ -30,7 +30,7 @@ namespace QuizTool.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            
+
             Manager.DefaultManager.WorkFinished += Current.Shutdown;
 
             Question currentQuestion = Manager.DefaultManager.SearchQuestionInDB();

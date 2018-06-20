@@ -9,6 +9,8 @@ namespace QuizTool.Logic.Repository
 {
     public class QuestionRepository
     {
+        Cast cast = new Cast();
+
         public Action<Question> ItemAdded { get; set; }
 
         private List<Question> _items;
@@ -24,49 +26,62 @@ namespace QuizTool.Logic.Repository
         {
             using (var context = new Context())
             {
-                _items = context.Questions.Include("Answers").ToList();
+                var qDBlist = context.QuestionsDB.Include("AnswersDB").ToList();
+                List<Question> qlist = new List<Question>();
+                foreach (var qDB in qDBlist)
+                {
+                    var q = cast.DBToQuestion(qDB);
+                    qlist.Add(q);
+                }
+                _items = qlist;
             }
         }
 
         public Question AddItem(Question question)
         {
+            var questionDB = cast.QuestionToDB(question);
             using (var context = new Context())
             {
-                context.Questions.Add(question);
+                context.QuestionsDB.Add(questionDB);
                 context.SaveChanges();
             }
 
+            question = cast.DBToQuestion(questionDB);
+
             _items.Add(question);
             ItemAdded?.Invoke(question);
+
             return question;
         }
 
         public Question ChangeState(Question item, State state)
         {
-            Question questionToEdit;            
+            QuestionDB questionToEdit;            
 
             using (var context = new Context())
             {
-                questionToEdit = context.Questions.Include("Answers").FirstOrDefault(q => q.Id == item.Id);
+                questionToEdit = context.QuestionsDB.Include("AnswersDB").FirstOrDefault(q => q.Id == item.Id);
                 questionToEdit.State = (int)state;
                 context.SaveChanges();                
             }
 
             _items.FirstOrDefault(q => q.Id == questionToEdit.Id).State = (int)state;
+            item.State = (int)state;
 
-            return questionToEdit;
+            return item;
 
 
         }
 
-            public Question EditItem(Question item, List<Answer> answers)
+        public Question EditItem(Question item, List<Answer> answers)
         {
+
             using (var context = new Context())
             {
-                var questionToEdit = context.Questions.Include("Answers").FirstOrDefault(q => q.Id == item.Id);
-                questionToEdit.IsOK = IsOK(item, answers);
-                List<Answer> toDelete = new List<Answer>();
-                foreach (Answer answer in questionToEdit.Answers)
+                var questionToEdit = context.QuestionsDB.Include("AnswersDB").FirstOrDefault(q => q.Id == item.Id);
+                questionToEdit.IsOK = cast.BoolToInt(IsOK(item, answers));
+                List<AnswerDB> toDelete = new List<AnswerDB>();
+                foreach (AnswerDB answer in questionToEdit.AnswersDB)
                 {
                     
                     if (answers.FirstOrDefault(a => a.Id == answer.Id) == null)
@@ -74,41 +89,33 @@ namespace QuizTool.Logic.Repository
                         toDelete.Add(answer);
                     }
                 }
-                questionToEdit.Answers.RemoveAll(a => toDelete.Contains(a));
-                questionToEdit.ReplyTime = DateTime.Now;
+                questionToEdit.AnswersDB.RemoveAll(a => toDelete.Contains(a));
+                questionToEdit.ReplyTime = DateTime.Now.ToString();
                 questionToEdit.State = (int)State.Answered;
                 context.SaveChanges();
 
                 foreach (var ans in toDelete)
                 {
-                    context.Answers.Remove(context.Answers.FirstOrDefault(a => a.Id == ans.Id));
+                    context.AnswersDB.Remove(context.AnswersDB.FirstOrDefault(a => a.Id == ans.Id));
                 }
                 context.SaveChanges();
 
-                item.IsOK = questionToEdit.IsOK;
-                item.Answers = questionToEdit.Answers;
-                item.State = questionToEdit.State;
-                item.ReplyTime = questionToEdit.ReplyTime;
+                _items.Remove(item);
+                item = cast.DBToQuestion(questionToEdit);
+                _items.Add(item);
 
-                return questionToEdit;
+                return item;
             }
         }
-
-        public Question GetItem()
-        {
-            using (var context = new Context())
-            {
-                return context.Questions.FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
-            }
-        }
-
+        
         public void RemoveItem(Question question)
         {
+
             using (var context = new Context())
             {
-                var questionToRemove = context.Questions.Include("Answers").FirstOrDefault(q => q.Id == question.Id);
-                context.Answers.RemoveRange(questionToRemove.Answers);
-                context.Set<Question>().Remove(questionToRemove);
+                var questionToRemove = context.QuestionsDB.Include("AnswersDB").FirstOrDefault(q => q.Id == question.Id);
+                context.AnswersDB.RemoveRange(questionToRemove.AnswersDB);
+                context.Set<QuestionDB>().Remove(questionToRemove);
                 context.SaveChanges();
             }
 

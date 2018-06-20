@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    public class Answer
+    {
+        public int Id { get; set; }
+        public int ExternalId { get; set; }
+        public string Text { get; set; }
+        public bool IsCorrect { get; set; }
+    }
 
-namespace QuizTool.Logic.Model
-{
     public class Question
     {
         public int Id { get; set; }
@@ -18,5 +18,5 @@ namespace QuizTool.Logic.Model
         public DateTime? ReplyTime { get; set; }
         public bool? IsOK { get; set; }
         public int State { get; set; }
+
     }
-}

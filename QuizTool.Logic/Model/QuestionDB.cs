@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace QuizTool.Logic.Model
 {
-    public class Question
+    public class QuestionDB
     {
         public int Id { get; set; }
         public string Text { get; set; }
         public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public Guid ReportId { get; set; }
-        public DateTime ReportTimestamp { get; set; }
-        public virtual List<Answer> Answers { get; set; }
-        public DateTime? ReplyTime { get; set; }
-        public bool? IsOK { get; set; }
+        public string Date { get; set; }
+        public string ReportId { get; set; }
+        public string ReportTimestamp { get; set; }
+        public virtual List<AnswerDB> AnswersDB { get; set; }
+        public string ReplyTime { get; set; }
+        public int? IsOK { get; set; }
         public int State { get; set; }
     }
 }
