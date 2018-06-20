@@ -18,6 +18,8 @@ namespace QuizTool.Logic.RESTClient
 
         }
 
+        private const string hostName = "http://localhost:49617";
+
         public async Task<Question> GetReport(DateTime date)
         {
             string resultContent;
@@ -28,12 +30,13 @@ namespace QuizTool.Logic.RESTClient
             };
 
             var jsonRequest = JsonConvert.SerializeObject(request);
+            HttpResponseMessage result;
 
             using (var client = new HttpClient())
             {
                 var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-                client.BaseAddress = new Uri("http://localhost:49617");
-                var result = await client.PostAsync("/api/report/putreport", httpContent);
+                client.BaseAddress = new Uri(hostName);
+                result = client.PostAsync("/api/report/putreport", httpContent).Result;
                 resultContent = await result.Content.ReadAsStringAsync();
             }
             try
@@ -57,8 +60,8 @@ namespace QuizTool.Logic.RESTClient
             using (var client = new HttpClient())
             {
                 var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
-                client.BaseAddress = new Uri("http://localhost:49617");
-                var result = await client.PostAsync("/api/userrequest/getreport", httpContent);
+                client.BaseAddress = new Uri(hostName);
+                var result = client.PostAsync("/api/userrequest/getreport", httpContent).Result;
                 resultContent = await result.Content.ReadAsStringAsync();
                 responseCode = result.StatusCode;
             }

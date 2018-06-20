@@ -41,7 +41,25 @@ namespace QuizTool.Logic.Repository
             return question;
         }
 
-        public Question EditItem(Question item, List<Answer> answers)
+        public Question ChangeState(Question item, State state)
+        {
+            Question questionToEdit;            
+
+            using (var context = new Context())
+            {
+                questionToEdit = context.Questions.Include("Answers").FirstOrDefault(q => q.Id == item.Id);
+                questionToEdit.State = (int)state;
+                context.SaveChanges();                
+            }
+
+            _items.FirstOrDefault(q => q.Id == questionToEdit.Id).State = (int)state;
+
+            return questionToEdit;
+
+
+        }
+
+            public Question EditItem(Question item, List<Answer> answers)
         {
             using (var context = new Context())
             {
@@ -66,6 +84,11 @@ namespace QuizTool.Logic.Repository
                     context.Answers.Remove(context.Answers.FirstOrDefault(a => a.Id == ans.Id));
                 }
                 context.SaveChanges();
+
+                item.IsOK = questionToEdit.IsOK;
+                item.Answers = questionToEdit.Answers;
+                item.State = questionToEdit.State;
+                item.ReplyTime = questionToEdit.ReplyTime;
 
                 return questionToEdit;
             }
@@ -100,7 +123,11 @@ namespace QuizTool.Logic.Repository
                 bool flag = true;
                 foreach (Answer item in selected)
                 {
-                    flag = answers.Contains(item);
+                    if (!answers.Contains(item))
+                    {
+                        flag = false;
+                        break;
+                    }                        
                 }
                 return flag;
             }

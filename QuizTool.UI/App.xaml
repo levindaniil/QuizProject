@@ -1,7 +1,8 @@
 ﻿<Application x:Class="QuizTool.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuizTool.UI"             
+             xmlns:local="clr-namespace:QuizTool.UI"       
+             ShutdownMode="OnExplicitShutdown"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="{x:Type Button}">

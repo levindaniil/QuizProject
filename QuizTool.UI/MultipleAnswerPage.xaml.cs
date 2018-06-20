@@ -23,6 +23,9 @@ namespace QuizTool.UI
     /// </summary>
     public partial class MultipleAnswerPage : Page
     {
+        Manager manager = new Manager();
+
+        public Action CloseWindow;
         QuestionRepository questionRepo = RepositoryFactory.Default.GetRepository<Question>(); 
 
         public MultipleAnswerPage(Question _question, List<Answer> _answers)
@@ -45,8 +48,8 @@ namespace QuizTool.UI
         {
             if (correctAnswersCount == 0)
             {
-                MessageBox.Show("Right answers are not found!" + "\n" + "The application will be closed", "Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
+                MessageBox.Show("Right answers are not found!" + "\n" + "The application will be closed", "QuizTool", MessageBoxButton.OK, MessageBoxImage.Error);
+                CloseWindow?.Invoke();
             }
             else
             {
@@ -157,6 +160,15 @@ namespace QuizTool.UI
             {
                 var correctAnswers = answers.FindAll(a => a.IsCorrect == true);
                 var chosenAnswers = checkBoxes.FindAll(a => a.IsChecked == true);
+
+                List<int> userAnswersNums = chosenAnswers.Select(c => int.Parse(c.Name.Substring(8))).ToList();
+                List<Answer> userAnswers = new List<Answer>();
+                foreach (var id in userAnswersNums)
+                {
+                    userAnswers.Add(answers.FirstOrDefault(a => a.Id == id));
+                }
+                questionRepo.EditItem(question, userAnswers);
+
                 foreach (var item in checkBoxes)
                 {
                     foreach (var ans in correctAnswers)
@@ -193,15 +205,7 @@ namespace QuizTool.UI
                 foreach (var box in checkBoxes)
                 {
                     box.IsEnabled = false;
-                }
-
-                List<int> userAnswersNums = chosenAnswers.Select(c => int.Parse(c.Name.Substring(11))).ToList();
-                List<Answer> userAnswers = new List<Answer>();
-                foreach (var id in userAnswersNums)
-                {
-                    userAnswers.Add(answers.FirstOrDefault(a => a.Id == id));
-                }
-                questionRepo.EditItem(question, userAnswers);
+                }                
 
             }
             else
@@ -300,8 +304,8 @@ namespace QuizTool.UI
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
+        {            
+            CloseWindow?.Invoke();
         }
     }
 }

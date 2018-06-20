@@ -14,7 +14,7 @@
         
         Icon="logo.png"
         Title=" Question" MinHeight="480" MinWidth="800" Loaded="Window_Loaded">
-    <Grid Loaded="Grid_Loaded">
+    <Grid>
             <Frame x:Name="mainFrame" BorderThickness="0" NavigationUIVisibility="Hidden" Background="#FF003459"/>
     </Grid>
 </Window>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +31,9 @@ namespace QuizTool.UI
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {        
+        public bool closedManually = true;
+
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
         [DllImport("user32.dll", SetLastError = true)]
@@ -38,60 +41,66 @@ namespace QuizTool.UI
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        QuestionRepository QuestionRepo;
+        
+        Question currentQuestion;
+
+
 
         public MainWindow()
         {
             InitializeComponent();
-            QuestionRepo = new QuestionRepository();            
+            currentQuestion = Manager.DefaultManager.SearchQuestionInDB();
+        }      
+
+        private void ClosedProgrammatically()
+        {
+            closedManually = false;
+            Close();
         }
-
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {        
-           
-            //listBoxAnswers.ItemsSource = Answers;
-            //listBoxQuestions.ItemsSource = Questions;
-        }
-
+        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var disp = Application.Current.Dispatcher;
 
             var hwnd = new WindowInteropHelper(this).Handle;
             SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
 
-            var currentQuestion = QuestionRepo.Data.ToList().FirstOrDefault(q => q.Date.Date == DateTime.Now.Date);
-
             //If statement for checking questions
             if (currentQuestion == null)
             {
-                var result = MessageBox.Show("Questions are not found!" + "\n" + "The application will be closed", "Sorry, something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-                Application.Current.Shutdown();
-                
+                var result = MessageBox.Show("Questions are not found!" + "\n" + "The application will be closed", "QuizTool", MessageBoxButton.OK, MessageBoxImage.Information);
+                ClosedProgrammatically();
             }
             else
-            {
-                var currentAnswers = QuestionRepo.Data.FirstOrDefault(q => q.Date == DateTime.Now.Date).Answers.ToList();
+            {               
+                var currentAnswers = currentQuestion.Answers.ToList();
 
                 int qtyAnswers = currentAnswers.FindAll(a => a.IsCorrect == true).Count();
 
                 if (qtyAnswers != 0)
-                    mainFrame.NavigationService.Navigate(new MultipleAnswerPage(currentQuestion, currentAnswers));
+                {
+                    var questionPage = new MultipleAnswerPage(currentQuestion, currentAnswers);
+                    questionPage.CloseWindow += ClosedProgrammatically;
+                    mainFrame.NavigationService.Navigate(questionPage);
+                }
+                    
                 else
                 {
-                    MessageBox.Show("Answers are not found!" + "\n" + "The application will be closed", "Something went wrong");
-                    Application.Current.Shutdown();
+                    MessageBox.Show("Answers are not found!" + "\n" + "The application will be closed", "QuizTool", MessageBoxButton.OK, MessageBoxImage.Error);
+                    ClosedProgrammatically();
                 }
             }
-
-
-
         }
 
+        
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            e.Cancel = true;
+
+            e.Cancel = closedManually;            
+            
+            if (!closedManually)
+                Application.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
         }
     }
 }
