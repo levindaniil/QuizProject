@@ -3,6 +3,7 @@ using QuizTool.Logic.DTO;
 using QuizTool.Logic.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,10 +16,20 @@ namespace QuizTool.Logic.RESTClient
     {
         public Client()
         {
-
+            hostName = GetHostName();
         }
 
-        private const string hostName = "http://localhost:49617";
+
+        private string hostName;
+
+        private string GetHostName()
+        {
+            string path = "../../hostname.txt";
+            if (File.Exists(path))
+                return File.ReadAllLines(path)[0];
+            else
+                return null;
+        }
 
         public async Task<Question> GetReport(DateTime date)
         {
@@ -36,7 +47,7 @@ namespace QuizTool.Logic.RESTClient
             {
                 var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
                 client.BaseAddress = new Uri(hostName);
-                result = client.PostAsync("/api/report/putreport", httpContent).Result;
+                result = client.PostAsync("api/report/putreport", httpContent).Result;
                 resultContent = await result.Content.ReadAsStringAsync();
             }
             try
@@ -61,7 +72,7 @@ namespace QuizTool.Logic.RESTClient
             {
                 var httpContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
                 client.BaseAddress = new Uri(hostName);
-                var result = client.PostAsync("/api/userrequest/getreport", httpContent).Result;
+                var result = client.PostAsync("api/userrequest/getreport", httpContent).Result;
                 resultContent = await result.Content.ReadAsStringAsync();
                 responseCode = result.StatusCode;
             }
